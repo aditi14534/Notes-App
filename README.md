@@ -20,6 +20,7 @@ Features
 🛡️ Route Protection and Error Handling
 
 Tech Stack
+
 Frontend: React, Redux Toolkit, Axios, TailwindCSS
 
 Backend: Node.js, Express, MongoDB, JWT
@@ -29,9 +30,10 @@ Others: Redux Persist, Toastify, React Router DOM
 Setup Instructions
 
 1. Clone the repo
+
    git clone https://github.com/your-username/goodnotes-app.git
    cd goodnotes-app
-2. Frontend Setup
+3. Frontend Setup
 
 cd frontend
 npm install
