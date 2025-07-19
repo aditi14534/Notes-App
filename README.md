@@ -31,16 +31,22 @@ Setup Instructions
 
 1. Clone the repo
 
-   git clone https://github.com/your-username/goodnotes-app.git
-   cd goodnotes-app
+git clone https://github.com/your-username/goodnotes-app.git
+   
+cd notes-app
+   
 3. Frontend Setup
 
-cd frontend
+cd frontend/notes-app
+
 npm install
+
 npm run dev
 
 3.Backend Setup
 
 cd backend
+
 npm install
-npm run dev
+
+npm start
