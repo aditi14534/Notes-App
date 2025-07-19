@@ -1,7 +1,8 @@
-GoodNotes - Full Stack Note-Taking App
+#GoodNotes - Full Stack Note-Taking App
 A full-stack notes management application with secure user authentication, CRUD features, tagging, search, and a clean, responsive UI.
 
 Features
+
 🔐 User Authentication (Signup/Login/Logout) using JWT
 
 🧠 Add, Edit, Delete, and Pin Notes
