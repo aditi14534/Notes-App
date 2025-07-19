@@ -34,7 +34,7 @@ Setup Instructions
 git clone https://github.com/your-username/goodnotes-app.git
    
 cd notes-app
-   
+
 2. Frontend Setup
 
 cd frontend/notes-app
