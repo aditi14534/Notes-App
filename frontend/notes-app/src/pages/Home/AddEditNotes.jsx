@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TagInput from "../../components/input/TagInput";
 import { MdClose } from "react-icons/md";
 import axiosInstance from "../../utils/axiosInstance";
+
 import { toast } from "react-toastify";
 
 const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
@@ -16,11 +17,14 @@ const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
     console.log(noteId);
 
     try {
-      const res = await axiosInstance.post(`/api/note/edit/${noteId}`, {
-        title,
-        content,
-        tags,
-      });
+      const res = await axiosInstance.post(
+        BASE_URL + `/api/note/edit/${noteId}`,
+        {
+          title,
+          content,
+          tags,
+        }
+      );
 
       console.log(res.data);
 
