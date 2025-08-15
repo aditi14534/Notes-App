@@ -22,8 +22,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+// ✅ PORT fix for local + Render
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 // import routes
@@ -36,7 +38,7 @@ app.use("/api/note", noteRouter);
 // error handling
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
-  const message = err.message || "Internal Serer Error";
+  const message = err.message || "Internal Server Error";
 
   return res.status(statusCode).json({
     success: false,
