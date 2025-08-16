@@ -4,27 +4,33 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+import authRouter from "./routes/auth.js";
+import noteRouter from "./routes/notes.js";
+
 dotenv.config();
 
+// MongoDB connection
 mongoose
   .connect(process.env.CONNECTION_STR)
   .then(() => {
-    console.log("Connected to mongoDB");
+    console.log("✅ Connected to MongoDB");
   })
   .catch((err) => {
-    console.log(err);
+    console.log("❌ MongoDB connection error:", err);
   });
 
 const app = express();
 
-// to make input as json
+// Middlewares
 app.use(express.json());
 app.use(cookieParser());
+
+// CORS
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://goodnotes-app-frontend.netlify.app",
+      "https://goodnotes-app-frontend.netlify.app", // ✅ your frontend
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -32,20 +38,14 @@ app.use(
   })
 );
 
-// ✅ PORT fix for local + Render
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Fallback for preflight requests
+app.options("*", cors());
 
-// import routes
-import authRouter from "./routes/auth.js";
-import noteRouter from "./routes/notes.js";
-
+// Routes
 app.use("/api/auth", authRouter);
 app.use("/api/note", noteRouter);
 
-// error handling
+// Error handling
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
@@ -55,4 +55,10 @@ app.use((err, req, res, next) => {
     statusCode,
     message,
   });
+});
+
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(` Server is running on port ${PORT}`);
 });
