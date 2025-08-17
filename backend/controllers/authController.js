@@ -55,15 +55,12 @@ export const signin = async (req, res, next) => {
 
     const { password: pass, ...rest } = validUser._doc;
 
-    // ✅ Cross-site compatible cookie setup
-    const isProd = process.env.NODE_ENV === "production";
-
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: isProd, // Localhost par false, production par true
-        sameSite: isProd ? "None" : "Lax", // Cross-site ke liye "None"
-        maxAge: 7 * 24 * 60 * 60 * 1000, // optional: 7 days
+        secure: process.env.NODE_ENV === "production", // true in prod
+        sameSite: "None", // 👈 Always None for Netlify + Render
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .status(200)
       .json({
@@ -78,12 +75,10 @@ export const signin = async (req, res, next) => {
 
 export const signout = async (req, res, next) => {
   try {
-    const isProd = process.env.NODE_ENV === "production";
-
     res.clearCookie("access_token", {
       httpOnly: true,
-      secure: isProd, // prod mein true
-      sameSite: isProd ? "None" : "Lax", // prod mein None
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "None", // 👈 must be same as login
     });
 
     res.status(200).json({
