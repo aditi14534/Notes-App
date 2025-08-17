@@ -25,7 +25,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS
+// ✅ CORS FIX
 const allowedOrigins = [
   "http://localhost:5173",
   "https://goodnotes-app-frontend.netlify.app",
@@ -33,21 +33,35 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      // agar request server ke andar se aayi hai (jaise Postman ya server-to-server) to origin null hoga
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// Preflight ke liye
+// ✅ Preflight ke liye
 app.options(
   "*",
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/note", noteRouter);
@@ -67,5 +81,5 @@ app.use((err, req, res, next) => {
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(` Server is running on port ${PORT}`);
+  console.log(`🚀 Server is running on port ${PORT}`);
 });

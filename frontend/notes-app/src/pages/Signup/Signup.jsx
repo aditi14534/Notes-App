@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 
 import { toast } from "react-toastify";
-import { BASE_URL } from "../../utils/constants";
 
 const Signup = () => {
   const [name, setName] = useState("");
