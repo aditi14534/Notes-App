@@ -26,21 +26,28 @@ app.use(express.json());
 app.use(cookieParser());
 
 // CORS
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://goodnotes-app-frontend.netlify.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://goodnotes-app-frontend.netlify.app", // ✅ your frontend
-    ],
+    origin: allowedOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// Fallback for preflight requests
-app.options("*", cors());
-
+// Preflight ke liye
+app.options(
+  "*",
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/note", noteRouter);
