@@ -17,14 +17,11 @@ const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
     console.log(noteId);
 
     try {
-      const res = await axiosInstance.post(
-        BASE_URL + `/api/note/edit/${noteId}`,
-        {
-          title,
-          content,
-          tags,
-        }
-      );
+      const res = await axiosInstance.post(`/api/note/edit/${noteId}`, {
+        title,
+        content,
+        tags,
+      });
 
       console.log(res.data);
 
