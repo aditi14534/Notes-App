@@ -58,8 +58,8 @@ export const signin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // true in prod
-        sameSite: "None", // 👈 Always None for Netlify + Render
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .status(200)
@@ -78,7 +78,7 @@ export const signout = async (req, res, next) => {
     res.clearCookie("access_token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "None", // 👈 must be same as login
+      sameSite: "None",
     });
 
     res.status(200).json({
